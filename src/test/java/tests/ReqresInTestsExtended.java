@@ -1,3 +1,5 @@
+package tests;
+
 import models.pojo.UserDataBodyModel;
 import models.pojo.UserDataResponseModel;
 import org.junit.jupiter.api.DisplayName;

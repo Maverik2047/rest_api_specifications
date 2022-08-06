@@ -1,5 +1,6 @@
 package tests;
 
+import models.lombok.UserData;
 import models.lombok.UserLoginBodyModel;
 import models.lombok.UserLoginResponseModel;
 import models.pojo.UserDataBodyModel;
@@ -9,6 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static specs.ListResourceSpecs.request;
+import static specs.ListResourceSpecs.response;
 import static specs.LoginSpecs.loginResponseSpec;
 import static specs.LoginSpecs.loginSpec;
 import static specs.LoginUnsuccessfulSpecs.loginUnResponse;
@@ -17,6 +20,25 @@ import static specs.PatchUserSpecs.patchResponse;
 import static specs.PatchUserSpecs.patchSpec;
 
 public class ReqresInTestsExtended extends TestBase {
+
+    @Test
+    @DisplayName("List Resource test with specs")
+    public void listResource() {
+
+        UserData data = given()
+                .spec(request)
+                .when()
+                .get("/unknown")
+                .then()
+                .spec(response)
+                .extract().as(UserData.class);
+        assertThat(data.getPerPage()).isEqualTo(6);
+        assertThat(data.getTotal()).isEqualTo(12);
+
+
+    }
+
+
     @Test
     @DisplayName("Pojo Successful patch user test")
     public void patchUser() {

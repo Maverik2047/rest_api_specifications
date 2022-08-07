@@ -1,5 +1,6 @@
 package tests;
 
+import io.restassured.http.ContentType;
 import models.lombok.*;
 import models.pojo.UserDataBodyModel;
 import models.pojo.UserDataResponseModel;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.Matchers.hasItem;
 import static specs.CreateUserSpecs.requestUser;
 import static specs.CreateUserSpecs.responseUser;
 import static specs.ListResourceSpecs.request;
@@ -20,6 +22,20 @@ import static specs.PatchUserSpecs.patchResponse;
 import static specs.PatchUserSpecs.patchSpec;
 
 public class ReqresInTestsExtended extends TestBase {
+
+
+    @Test
+    public void checkEmailUsingGroovy() {
+        given()
+                .log().uri()
+                .contentType(ContentType.JSON)
+                .when()
+                .get("api/users?delay=3")
+                .then()
+                .log().body()
+                .body("data.findAll{it.email =~/.*?@reqres.in/}.email.flatten()",
+                        hasItem("george.bluth@reqres.in"));
+    }
 
     @Test
     @DisplayName("Create user with lombok and specs")

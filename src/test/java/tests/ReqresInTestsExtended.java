@@ -27,12 +27,11 @@ public class ReqresInTestsExtended extends TestBase {
     @Test
     public void checkEmailUsingGroovy() {
         given()
-                .log().uri()
-                .contentType(ContentType.JSON)
+                .spec(request)
                 .when()
-                .get("api/users?delay=3")
+                .get("/users?delay=3")
                 .then()
-                .log().body()
+                .spec(response)
                 .body("data.findAll{it.email =~/.*?@reqres.in/}.email.flatten()",
                         hasItem("george.bluth@reqres.in"));
     }

@@ -1,6 +1,5 @@
 package tests;
 
-import io.restassured.http.ContentType;
 import models.lombok.*;
 import models.pojo.UserDataBodyModel;
 import models.pojo.UserDataResponseModel;
